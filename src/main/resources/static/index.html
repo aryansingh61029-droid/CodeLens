@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="description" content="Compare Java, Python and C/C++ programs with normalized token fingerprints.">
+  <title>Compare programs · CodeLens</title>
+  <!-- Bundled production CSS also keeps the UI styled when the requested CDN is offline. -->
+  <link rel="stylesheet" href="/tailwind.css">
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/sample-data.js" defer></script>
+  <script src="/app.js" defer></script>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="border-b border-slate-200 bg-white">
+    <div class="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-5 px-6 py-5">
+      <a href="/" class="brand"><span class="brand-icon" aria-hidden="true">◈</span> CodeLens <span class="text-xs font-medium text-slate-400">/ similarity lab</span></a>
+      <nav aria-label="Main navigation" class="flex flex-wrap gap-2"><a href="/" class="nav-link current" aria-current="page">Compare</a><a href="/batch.html" class="nav-link ">Batch analysis</a><a href="/samples.html" class="nav-link ">Sample codes</a><a href="/history.html" class="nav-link">History</a></nav>
+    </div>
+  </header>
+  <main id="main" class="mx-auto max-w-7xl px-6 py-12"><section class="mb-9 max-w-3xl"><p class="eyebrow">SINGLE COMPARISON</p>
+      <h1 class="mt-3 text-4xl font-semibold tracking-tight text-slate-900 sm:text-5xl">Different names. The same idea?</h1>
+      <p class="mt-4 text-lg leading-relaxed text-slate-500">Look beyond formatting and variable names. Compare two programs and see the code regions that share a structural fingerprint.</p></section>
+    <div class="mb-7 flex flex-wrap gap-3 text-xs font-medium text-slate-600"><span class="chip">01 · Normalize tokens</span><span class="chip">02 · Winnow fingerprints</span><span class="chip">03 · Review the overlap</span></div>
+    <form id="compare-form" class="panel">
+      <div class="mb-7 flex flex-wrap items-center justify-between gap-5"><h2 class="text-xl font-semibold">Your programs</h2>
+        <fieldset class="mode-switch"><legend class="sr-only">Input method</legend>
+          <label><input type="radio" name="mode" value="files" checked> Upload files</label>
+          <label><input type="radio" name="mode" value="paste"> Paste code</label></fieldset></div>
+      <div id="paste-options" class="mb-5" hidden><label for="language" class="mr-3 text-sm font-medium">Language for both programs</label>
+        <select id="language"><option value="JAVA">Java</option><option value="PYTHON">Python</option><option value="CPP">C / C++</option></select></div>
+      <div class="grid gap-6 lg:grid-cols-2"><section><div class="mb-3 flex items-center gap-3"><span class="number">01</span><h3 class="font-semibold">First program</h3></div>
+    <label class="dropzone" data-slot="0" for="file1">
+      <span class="text-3xl text-emerald-700" aria-hidden="true">↥</span>
+      <strong>Choose the first source file</strong><span class="text-sm text-slate-500">Drag and drop, or click to browse</span>
+      <input id="file1" type="file" accept=".java,.py,.c,.h,.cpp,.cc,.cxx,.hpp,.hh,.hxx" aria-label="Choose the first source file">
+      <span class="filename" id="filename1">No file selected</span></label>
+    <div class="paste-field" hidden><label class="sr-only" for="code1">First program code</label>
+      <textarea id="code1" class="code-input" placeholder="Paste your first program here…" spellcheck="false"></textarea></div>
+  </section><section><div class="mb-3 flex items-center gap-3"><span class="number">02</span><h3 class="font-semibold">Second program</h3></div>
+    <label class="dropzone" data-slot="1" for="file2">
+      <span class="text-3xl text-emerald-700" aria-hidden="true">↥</span>
+      <strong>Choose the second source file</strong><span class="text-sm text-slate-500">Drag and drop, or click to browse</span>
+      <input id="file2" type="file" accept=".java,.py,.c,.h,.cpp,.cc,.cxx,.hpp,.hh,.hxx" aria-label="Choose the second source file">
+      <span class="filename" id="filename2">No file selected</span></label>
+    <div class="paste-field" hidden><label class="sr-only" for="code2">Second program code</label>
+      <textarea id="code2" class="code-input" placeholder="Paste your second program here…" spellcheck="false"></textarea></div>
+  </section></div>
+      <div class="mt-7 flex flex-wrap items-center justify-between gap-4 border-t border-slate-100 pt-6">
+        <p class="text-xs text-slate-500">UTF-8 · 256 KiB per program · same language</p>
+        <div class="flex flex-wrap items-center gap-4"><a class="text-sm font-medium text-emerald-800" href="/samples.html">Try a sample →</a>
+          <button class="primary" type="submit">Compare programs <span aria-hidden="true">↗</span></button></div></div>
+    </form>
+    <section id="result" class="panel mt-7" aria-label="Comparison result" hidden>
+      <div class="mb-8 flex flex-wrap items-center gap-7 border-b border-slate-100 pb-7">
+        <div id="gauge" class="gauge" role="meter" aria-label="Fingerprint similarity" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+          <svg viewBox="0 0 120 120" aria-hidden="true"><circle class="gauge-track" cx="60" cy="60" r="52"/><circle id="gauge-arc" cx="60" cy="60" r="52"/></svg>
+          <div><strong id="score">0%</strong><span>SIMILARITY</span></div></div>
+        <div><p class="eyebrow">JACCARD FINGERPRINT SCORE</p><h2 class="my-3 text-2xl font-semibold">Comparison complete <span id="verdict" class="badge"></span></h2>
+          <p id="metrics" class="text-sm text-slate-600"></p><p class="mt-2 max-w-xl text-sm text-slate-500">Use this signal to guide a review. It measures shared fingerprints, not the percentage of lines copied.</p></div></div>
+      <div class="mb-4 flex flex-wrap items-center justify-between gap-2"><h3 class="text-lg font-semibold">Matching source regions</h3><span class="text-xs text-slate-500"><span class="legend-dot"></span> Shared token fingerprints</span></div>
+      <div class="grid gap-5 lg:grid-cols-2"><section class="code-panel"><h3 id="first-title"></h3><pre tabindex="0" aria-label="First program with matching regions"><code id="first-code"></code></pre></section>
+        <section class="code-panel"><h3 id="second-title"></h3><pre tabindex="0" aria-label="Second program with matching regions"><code id="second-code"></code></pre></section></div>
+    </section>
+    <section class="mt-8 grid gap-5 sm:grid-cols-3" aria-label="About the checker">
+      <div class="info-card"><h2>Structure over spelling</h2><p>Names, literal values, comments and spacing are normalized before comparison.</p></div>
+      <div class="info-card"><h2>Matches you can inspect</h2><p>Highlighted regions point you back to the original source for a closer review.</p></div>
+      <div class="info-card"><h2>More than two files?</h2><p>Compare a whole submission set with <a href="/batch.html">batch analysis →</a></p></div>
+    </section>
+    <p id="status" role="status" aria-live="polite" class="mt-5 text-sm text-emerald-800"></p>
+    <p id="error" class="error" role="alert" hidden></p>
+  </main>
+  <footer class="mx-auto flex max-w-7xl flex-wrap justify-between gap-3 border-t border-slate-200 px-6 py-7 text-xs text-slate-500">
+    <span>CodeLens · Built to make code review clearer.</span><span>Java · Python · C / C++</span>
+    <span>Comparison history saved in MySQL. Source code is not stored.</span>
+  </footer>
+</body>
+</html>

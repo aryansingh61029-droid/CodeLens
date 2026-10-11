@@ -1,0 +1,13 @@
+target/
+target-ui/
+target-mysql/
+target*/
+.git/
+.github/
+.idea/
+.vscode/
+.env
+*.zip
+*.log
+
+node_modules/

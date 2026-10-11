@@ -1,0 +1,12 @@
+target/
+target-ui/
+target-mysql/
+target*/
+.idea/
+.vscode/
+*.iml
+*.log
+.env
+.DS_Store
+
+node_modules/
